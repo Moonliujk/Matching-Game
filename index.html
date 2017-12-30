@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Matching Game</title>
+    <meta name="description" content="">
+    <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+    <!--win board after all elements matched-->
+    <div class="win information">
+        <section>
+            <p class="header"></p>
+            <p id="starsInfor"></p>
+            <p>Move <span id="stepsInfor"></span> steps.</p>
+            <p>You spend <span id="minute"></span> min <span id="second"></span> sec.</p>
+
+            <a href="#" class="restart button">Play Again</a>
+        </section>
+    </div>
+
+    <!--replay information after all elements matched-->
+    <div class="renew information">
+        <section>
+            <p>Do you want to restart the game?</p>
+            <div class="btn-grounp">
+              <a href="#" class="restart button">Yes</a>
+              <a href="#" class="button continue">No</a>
+            </div>
+        </section>
+    </div>
+
+    <!--if not choose the mode, this pop-up will show!-->
+    <div class="mode-choose information">
+        <section>
+            <p>Please choose the game level at first!</p>
+            <a href="#" class="backto button">Okay!</a>
+        </section>
+    </div>
+
+    <!--start interface-->
+    <div class="start-interface">
+        <header>
+            <h1>Matching Game</h1>
+        </header>
+
+        <section class="flex-column">
+            <div class="mode flex-row">
+                <input type="radio" id="normal" value="normal" name="mode"/>
+                    <label for="normal">Normal</label>
+                <input type="radio" id="hard" value="hard" name="mode"/>
+                    <label for="hard">Hard</label>
+            </div>
+
+            <a href="#" id="start">Begin to travel</a>
+        </section>
+    </div>
+
+    <!--main game interface-->
+    <div class="container">
+        <div class="information-box">
+            <header>
+                <h1>Matching Game</h1>
+            </header>
+
+            <p class="sperate-line"></p>
+
+            <section class="score-panel">
+
+              <!--show the number of stars that the player gets-->
+              <p class="stars">
+                Rating:
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+              </p>
+
+              <p>
+                Moves:
+                <span class="moves">3</span>
+              </p>
+
+              <p class="time">
+                Time:
+                <span class="minutes">00</span>:
+                <span class="seconds">00</span>
+              </p>
+
+              <div class="restart-icon">
+            		<i class="fa fa-repeat"></i>
+            	</div>
+            </section>
+        </div>
+
+        <!--count down module-->
+        <div class="count-down">
+          <div class="count-circle">
+              <p><span id="rest-time">30</span></p>
+          </div>
+        </div>
+
+        <!--card arrays-->
+        <ul class="deck">
+
+            <!--the basic structure of cards-->
+            <!--<li class="flipper-container card">
+                <div class="flipper">
+                    <i class="front"></i>
+                    <i class="back"></i>
+                </div>
+            </li>-->
+        </ul>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
