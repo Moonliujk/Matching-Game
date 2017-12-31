@@ -212,7 +212,7 @@ function backToMain() {
 function delBacktoAnimation() {
   modeChooseInfor.style.display = 'none';
   this.classList.remove('flipOutX');
-  this.removeEventListener('animationend', delAnimationBack, false);
+  this.removeEventListener('animationend', delBacktoAnimation, false);
 }
 
 function restartDlg() {
@@ -441,6 +441,7 @@ function winAnimation(isWin) {
 function clock() {
   if (clockFlag)
     clearTimeout(clockFlag);
+
   clockFlag = setTimeout("clock()", 1000);
 
   if (time <= 30)  {

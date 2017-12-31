@@ -414,7 +414,7 @@ body {
 
 #rest-time.empersized {
   color: red;
-  animation: jackInTheBox 0.9s 4 forwards;
+  animation: jackInTheBox 1s 4 forwards;
 }
 
 #rest-time::after {
