@@ -4,6 +4,7 @@
 
 * [Instructions](#instructions)
 * [Contributing](#contributing)
+* Please click here to play [Matching Game](https://moonliujk.github.io/Matching-Game/)
 
 ## Instructions
 
