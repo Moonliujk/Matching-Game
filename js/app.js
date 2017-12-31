@@ -406,7 +406,7 @@ function winAnimation(isWin) {
   container.classList.add("bg-blur");
 
   for (let i=0;i<starsNum;i++) {
-    finialStar += `<span class='fa fa-star fade-in ${delayTime[i]}></span>` ;
+    finialStar += `<span class='fa fa-star fade-in ${delayTime[i]}'></span> ` ;
   }
 
   if(isWin === "true"){
