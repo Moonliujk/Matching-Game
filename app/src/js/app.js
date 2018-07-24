@@ -4,7 +4,7 @@
 
 /*
   * TODO:
-          
+
   */
 const CARDSNUM = 16;    //define the number of cards
 
@@ -47,12 +47,12 @@ var source = [
 function createNodes() {
   for(let i=0;i<CARDSNUM;i++) {
     deck.innerHTML +=
-    `<li class="flipper-container card">
+    `<div class="flipper-container card">
           <div class="flipper">
-              <i class="front"></i>
-              <i class="back"></i>
+              <div class="front"></div>
+              <div class="back"></div>
           </div>
-      </li>`;
+      </div>`;
   }
 }
 

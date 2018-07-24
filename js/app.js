@@ -4,7 +4,7 @@
 
 /*
   * TODO:
-          
+
   */
 const CARDSNUM = 16;    //define the number of cards
 
@@ -18,7 +18,9 @@ let cardsArray = new Array(),
 
 
 var moves = document.getElementsByClassName("moves")[0];
-var deck = document.getElementsByClassName('deck')[0];
+
+let $deck = $('.deck');
+
 var winInfor = document.getElementsByClassName('win')[0];
 var renewInfor = document.getElementsByClassName('renew')[0];
 var stars = document.getElementsByClassName("stars")[0];
@@ -45,49 +47,56 @@ var source = [
 
 //create 16 children nodes into the <ul class="deck">
 function createNodes() {
-  for(let i=0;i<CARDSNUM;i++) {
-    deck.innerHTML +=
-    `<li class="flipper-container card">
+  let content = ``;
+
+  for(let i=0; i<CARDSNUM; i++) {
+    content +=
+    `<div class="flipper-container card">
           <div class="flipper">
-              <i class="front"></i>
-              <i class="back"></i>
+              <div class="front"></div>
+              <div class="back"></div>
           </div>
-      </li>`;
+      </div>`;
   }
+
+  $deck.html(content);
 }
 
 //Create Cards constructor, which includes imageNum & source properties
-//The imageNum can be an ID number of the card, which can be used to define whether two cards are same
+//The imageNum is an ID number of the card, which can be used to define whether two cards are matched
 function Cards(i) {
   this.imageNum = i;
   this.source = `img/matchIcon/${source[i]}`;
 }
 //Create cards which save in cardsArray and each card has its own imageNum(there are two cards have same imageNum.)
 function createCards () {
-  var num = 0;
-  for(let i=0;i<CARDSNUM;i++){
-    if(i%2 == 0){
+  let num = 0;
+
+  for(let i=0; i<CARDSNUM; i++){
+    if(i%2 === 0){
       num++;
     }
     cardsArray[i] = new Cards(num-1);
   }
-  shuffle(cardsArray);
+
 }
 
 // Shuffle function from http://stackoverflow.com/a/2450976
-function shuffle(array) {
-    let currentIndex = array.length, temporaryValue, randomIndex;
+function shuffle() {
+    let currentIndex = cardsArray.length,
+        temporaryValue,
+        randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
+        temporaryValue = cardsArray[currentIndex];
+        cardsArray[currentIndex] = cardsArray[randomIndex];
+        cardsArray[randomIndex] = temporaryValue;
     }
 }
 
-//Create structure which can save the elements that are clicked contiguously
+//Create the structure which can save the elements that are clicked contiguously
 //'matched' property can be used to judge whether two elements have been compared.
 function MatchUnit(lastEle, currentEle) {
   this.lastEle = lastEle;
@@ -112,21 +121,24 @@ function eventsRegister() {
       continueButton = document.getElementsByClassName("continue")[0],
       backtoButton = document.getElementsByClassName('backto')[0],
       startButton = document.getElementById("start"),
-      cardsEle = document.getElementsByClassName('flipper');
+      $cardsEle = $('.flipper');
 
   startButton.addEventListener("click", chooseModeDlg, false);
   backtoButton.addEventListener("click", backToMain, false);
   restartIcon.addEventListener("click", restartDlg, false);
   continueButton.addEventListener("click", continueToPlay, false);
 
-  const NUM_CARDS = cardsEle.length;
+  //const NUM_CARDS = cardsEle.length;
   const NUM_RESTARTBUTTONS = restartButtons.length;
 
-  // to bind each cards with its function through the 'data-id' property eg: cardsEle[1] => the function Cards[1]
-  for(let i=0;i<NUM_CARDS;i++){
-    cardsEle[i].setAttribute("data-id", i);
-    cardsEle[i].addEventListener("click", cardsAnimation, false);
-  }
+  // to bind each cards with its function through the 'data-id' property eg: $cardsEle[1] => the function Cards[1]
+  //for(let i=0;i<NUM_CARDS;i++){
+  //  cardsEle[i].setAttribute("data-id", i);
+  //  cardsEle[i].addEventListener("click", cardsClickEvent, false);
+  //}
+  $cardsEle.each(function(index) {
+    $(this).attr("data-id", index).click(cardsClickEvent)
+  })
   for(let i=0;i<NUM_RESTARTBUTTONS ;i++){
     restartButtons[i].addEventListener("click", backtoStart, false);
   }
@@ -236,9 +248,9 @@ function backtoStart() {
   initCards();
 }
 
-//to init relevant value, remove some classes in elements and configure some elements background images.
+//to init relevant value, remove classname in elements and configure some elements background images.
 function initCards() {
-  let cardsEle = document.getElementsByClassName('flipper');
+  let $cardsEle = $('.flipper');
 
   clearTimeout(clockFlag);
 
@@ -254,40 +266,51 @@ function initCards() {
   countCircle.classList.remove('count-down-animation', 'running');
 
   createCards();
+  shuffle();
 
   const NUM_STARTS = starsEle.length;
-  const NUM_CARDS = cardsEle.length;
+  const NUM_CARDS = $cardsEle.length;
 
   for (let i=0;i<NUM_STARTS;i++) {
     starsEle[i].className = "fa fa-star";
   }
   //to configure each card's background-image
-  for (let i=0;i<NUM_CARDS;i++) {
-    cardsEle[i].className = "flipper";
-    cardsEle[i].lastElementChild.style.backgroundImage = `url(${cardsArray[i].source})`;
-  }
+  //for (let i=0; i<NUM_CARDS; i++) {
+    // cardsEle[i].className = "flipper";
+    //
+    //cardsEle[i].lastElementChild.style.backgroundImage = `url(${cardsArray[i].source})`;
+  //}
+  $.each($('.flipper .back'), function(index) {
+    $(this).css('background-image', `url(${cardsArray[index].source})`);
+  })
 }
 
-
 //to add animation through adding classes on elements and count the number of steps
-function cardsAnimation() {
-  if(this.classList.contains("match") || this.classList.contains("open"))
-    return true;
+/**
+ * [cardsClickEvent 为点击元素添加类名，添加点击动画以及将点击元素加入匹配单元]
+ * @return none
+ */
+function cardsClickEvent() {
+  let ele = $(this);
 
-  this.classList.add("open", "show");
+  if(ele.hasClass("match") || ele.hasClass("open") || ele.hasClass("error"))  return ;
+
+  ele.addClass("open", "show");
 
   steps++;
   moves.innerHTML = Math.floor(steps/2);
   setStars(Math.floor(steps/2));
 
-  if(steps%2 == 1){
-    lastEle = this;
-    return true;
+  if(steps%2 === 1){
+    lastEle = ele;
+  } else if (lastEle.attr("data-id") !== ele.attr("data-id")) {    // 保证两次单击的元素不一样
+      currentEle = ele;
+      matchQueue.push(new MatchUnit(lastEle, currentEle));
+      setTimeout(() => {
+        isMatch(matchQueue)
+      }, 500);
   } else {
-    currentEle = this;
-    matchQueue.push(new MatchUnit(lastEle, currentEle));
-    setTimeout("isMatch(matchQueue)", 500);
-    return true;
+    steps--;
   }
 }
 
@@ -327,17 +350,17 @@ function setStars(stepNum) {
 //this algorithm has the problem, it can't finish dynamic data save!
 //to compare with two elements' imageNum properties at the same MatchUnit(per 500ms)
 function isMatch(array) {
-  if(array.length === 0)
-    return false;
+  if(array.length === 0) return ;
+
   while ( (array.length !== 0) && (!array[0].matched)) {
-    let lastEle = array[0].lastEle,
-        currentEle = array[0].currentEle,
-        num_last = lastEle.getAttribute("data-id"),
-        num_cur = currentEle.getAttribute("data-id");
+    let $lastEle = array[0].lastEle,
+        $currentEle = array[0].currentEle,
+        num_last = $lastEle.attr("data-id"),
+        num_cur = $currentEle.attr("data-id");
 
     if(cardsArray[num_last].imageNum === cardsArray[num_cur].imageNum){
-      lastEle.classList.add("match");
-      currentEle.classList.add("match");
+      $lastEle.addClass("match");
+      $currentEle.addClass("match");
       array.shift();
       if(++matchNum === 8) {
         countCircle.classList.remove('count-down-animation', 'paused');
@@ -346,23 +369,30 @@ function isMatch(array) {
       }
     } else {
       array[0].matched = true;
-      lastEle.classList.add("erro");
-      currentEle.classList.add("erro");
-      setTimeout("unmatched(matchQueue)", 500);
+      // google适用
+      $lastEle.addClass("error").bind('animationend', function() {
+        setTimeout(() => {
+          $lastEle.removeClass("error open show")
+        }, 250)
+      });
+      $currentEle.addClass("error").bind('animationend', function() {
+        setTimeout(() => {
+          $currentEle.removeClass("error open show")
+        }, 250)
+      });
+      // edge 适用
+      /*$lastEle.addClass("error").bind('animationend', function() {
+          $lastEle.removeClass("error open show")
+      });
+      $currentEle.addClass("error").bind('animationend', function() {
+          $currentEle.removeClass("error open show")
+      });*/
+
+
+      array.shift();
     }
   }
 }
-
-function unmatched(array) {
-  array[0].lastEle.classList.remove("erro", "open", "show");
-  array[0].currentEle.classList.remove("erro", "open", "show");
-
-  array.shift();
-}
-
-/*function deleteMatcheUint() {
-
-}*/
 
 //to show the finish-game dislog, add some animation into it.
 function winAnimation(isWin) {

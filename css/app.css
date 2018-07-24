@@ -285,7 +285,6 @@ body {
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    list-style-type: none;
 }
 
 .deck .card {
@@ -335,10 +334,10 @@ body {
     animation: pulse 0.5s forwards;
     font-size: 33px;
 }
-.deck .flipper.erro {
+.deck .flipper.error {
     cursor: default;
     animation: jello 0.5s forwards,
-               close 0.5s 0.5s forwards;
+               close 0.5s 0.45s forwards;
     transform-origin: center;
 }
 

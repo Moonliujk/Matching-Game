@@ -17,8 +17,9 @@ body {
 }
 
 body {
-    background: white url("../img/kanshan_little.png") no-repeat 0% 100%/300px;
+    background: url("../img/kanshan_little.png") no-repeat 0% 100%/300px;
     font-family: 'Coda', cursive;
+    min-width: 500px;
 }
 
 /*information board style*/

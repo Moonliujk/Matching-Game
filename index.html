@@ -8,9 +8,9 @@
     <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
     <link rel="stylesheet" href="css/app.css">
     <!--PC端小屏幕样式-->
-    <link href="css/css-pc-small.css" rel="stylesheet" type="text/css" media="screen and (max-width: 640px)">
-    <!--手机端-->
-    <link href="css/css-mobile.css" rel="stylesheet" type="text/css" media="screen and (max-width: 640px) and (min-device-pixel-ratio: 1.5) ">
+    <link href="css/css-pc-small.css" rel="stylesheet" type="text/css" media="screen and (max-width: 640px) and (-webkit-max-device-pixel-ratio: 1.5)">
+    <!--手机端;先不考虑-->
+    <link href="css/css-mobile.css" rel="stylesheet" type="text/css" media="screen and (max-width: 640px) and (-webkit-min-device-pixel-ratio: 2)">
     <!--PC端屏幕样式-->
     <link href="css/css-pc.css" rel="stylesheet" type="text/css" media="screen and (min-width: 641px)">
 </head>
@@ -108,18 +108,19 @@
         </div>
 
         <!--card arrays-->
-        <ul class="deck">
+        <div class="deck">
 
             <!--the basic structure of cards-->
-            <!--<li class="flipper-container card">
+            <!--<div class="flipper-container card">
                 <div class="flipper">
-                    <i class="front"></i>
-                    <i class="back"></i>
+                    <div class="front"></i>
+                    <div class="back"></i>
                 </div>
-            </li>-->
-        </ul>
+            </div>-->
+        </div>
     </div>
 
+    <script src="js/jquery-3.3.1.min.js" type="text/javascript"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
