@@ -7,6 +7,16 @@
 
   */
 const CARDSNUM = 16;    //define the number of cards
+const source = [
+  "chirsmasTree.jpg",
+  "gre.png",
+  "kanshan.png",
+  "papa.png",
+  "pizza.png",
+  "polarBeer.png",
+  "reindeer.jpg",
+  "sushi.png"
+];
 
 let cardsArray = new Array(),
     matchQueue = new Array(),
@@ -19,14 +29,20 @@ let cardsArray = new Array(),
 
 var moves = document.getElementsByClassName("moves")[0];
 
-let $deck = $('.deck');
+// let $deck = $('.deck');
+// define timer which includes time relative params
+var timer = {
+  time: 0,
+  minutes: $('.minutes'),
+  seconds: $('.seconds'),
+}
 
 var winInfor = document.getElementsByClassName('win')[0];
 var renewInfor = document.getElementsByClassName('renew')[0];
 var stars = document.getElementsByClassName("stars")[0];
 var starsEle = stars.getElementsByTagName("span");
-var minutes = document.getElementsByClassName('minutes')[0];
-var seconds = document.getElementsByClassName('seconds')[0];
+// var minutes = document.getElementsByClassName('minutes')[0];
+// var seconds = document.getElementsByClassName('seconds')[0];
 var container = document.getElementsByClassName('container')[0];
 var countCircle = document.getElementsByClassName('count-circle')[0];
 var startInterface = document.getElementsByClassName("start-interface")[0];
@@ -34,20 +50,11 @@ var countDown = document.getElementsByClassName('count-down')[0];
 var inputs = document.getElementsByTagName('input');
 var restTime = document.getElementById('rest-time');
 var modeChooseInfor = document.getElementsByClassName('mode-choose')[0];
-var source = [
-  "chirsmasTree.jpg",
-  "gre.png",
-  "kanshan.png",
-  "papa.png",
-  "pizza.png",
-  "polarBeer.png",
-  "reindeer.jpg",
-  "sushi.png"
-];
 
 //create 16 children nodes into the <ul class="deck">
 function createNodes() {
-  let content = ``;
+  let content = '';
+  let $deck = $('.deck');
 
   for(let i=0; i<CARDSNUM; i++) {
     content +=
@@ -103,10 +110,7 @@ function MatchUnit(lastEle, currentEle) {
   this.currentEle = currentEle;
   this.matched = false;
 }
-//to format the output  eg: '0:0' => '00:09'
-function formatting(time) {
-  return (time>=0 && time<=9) ? "0" + time : time;
-}
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -116,32 +120,27 @@ function formatting(time) {
 
 //To create some eventsListener on some controller.
 function eventsRegister() {
-  let restartIcon = document.getElementsByClassName("restart-icon")[0],
-      restartButtons = document.getElementsByClassName("restart"),
-      continueButton = document.getElementsByClassName("continue")[0],
-      backtoButton = document.getElementsByClassName('backto')[0],
-      startButton = document.getElementById("start"),
+  let $restartIcon = $('.restart-icon'),
+      $restartButtons = $('.restart'),
+      $continueButton = $('.continue'),
+      $backtoButton = $('.backto'),
+      $startButton = $('#start'),
       $cardsEle = $('.flipper');
 
-  startButton.addEventListener("click", chooseModeDlg, false);
-  backtoButton.addEventListener("click", backToMain, false);
-  restartIcon.addEventListener("click", restartDlg, false);
-  continueButton.addEventListener("click", continueToPlay, false);
+  $startButton.click(chooseModeDlg);
+  $backtoButton.click(backToMain);
+  $restartIcon.click(restartDlg);
+  $continueButton.click(continueToPlay);
 
   //const NUM_CARDS = cardsEle.length;
-  const NUM_RESTARTBUTTONS = restartButtons.length;
+  $restartButtons.each(function() {
+    $(this).click(backtoStart)
+  });
 
   // to bind each cards with its function through the 'data-id' property eg: $cardsEle[1] => the function Cards[1]
-  //for(let i=0;i<NUM_CARDS;i++){
-  //  cardsEle[i].setAttribute("data-id", i);
-  //  cardsEle[i].addEventListener("click", cardsClickEvent, false);
-  //}
   $cardsEle.each(function(index) {
     $(this).attr("data-id", index).click(cardsClickEvent)
   })
-  for(let i=0;i<NUM_RESTARTBUTTONS ;i++){
-    restartButtons[i].addEventListener("click", backtoStart, false);
-  }
 
 }
 
@@ -150,8 +149,7 @@ function chooseModeDlg() {
   //to judge whether choose the game level
   for (let i=0;i<inputs.length;i++) {
     if (inputs[i].checked) {
-      startGame();
-      return true;
+      return startGame();
     }
   }
 
@@ -188,7 +186,7 @@ function showCountDown() {
 }
 
 function countDownFinish() {
-  if(time === 30 && matchNum !== 8)  {
+  if(timer.time === 30 && matchNum !== 8)  {
       clearTimeout(clockFlag);
       winInfor.style.display = "block";
       winAnimation("false");
@@ -254,12 +252,12 @@ function initCards() {
 
   clearTimeout(clockFlag);
 
-  minutes.innerHTML = '00';
-  seconds.innerHTML = '00';
+  timer.minutes.text('00');
+  timer.seconds.text('00');
   moves.innerHTML = "0";
   steps = 0;
   matchNum = 0;
-  time = 0;
+  timer.time = 0;
 
   matchQueue = new Array();
   countDown.style.display = "none";
@@ -361,7 +359,9 @@ function isMatch(array) {
     if(cardsArray[num_last].imageNum === cardsArray[num_cur].imageNum){
       $lastEle.addClass("match");
       $currentEle.addClass("match");
+
       array.shift();
+
       if(++matchNum === 8) {
         countCircle.classList.remove('count-down-animation', 'paused');
         clearTimeout(clockFlag);
@@ -388,7 +388,6 @@ function isMatch(array) {
           $currentEle.removeClass("error open show")
       });*/
 
-
       array.shift();
     }
   }
@@ -396,16 +395,16 @@ function isMatch(array) {
 
 //to show the finish-game dislog, add some animation into it.
 function winAnimation(isWin) {
-  let finishStars = document.getElementsByClassName('fa-star-o'),
+  let $finishStars = $('.fa-star-o'),
       header = winInfor.getElementsByClassName('header')[0],
-      starsInfor = document.getElementById('starsInfor'),
-      stepsInfor = document.getElementById('stepsInfor'),
-      showMin = document.getElementById('minute'),
-      showSec = document.getElementById('second');
+      $starsInfor = $('#starsInfor'),
+      $stepsInfor = $('#stepsInfor'),
+      $showMin = $('#minute'),
+      $showSec = $('#second');
 
   let finialTxt,
       finialStar = "",
-      starsNum = 3 - finishStars.length;
+      starsNum = 3 - $finishStars.length;
 
   let delayTime = [
     "delay",
@@ -436,20 +435,22 @@ function winAnimation(isWin) {
           break;
       }
       header.innerHTML = finialTxt;
-      starsInfor.innerHTML = starsNum === 0 ? "You passed the game!" : "You get " + finialStar + " .";
+      $starsInfor[0].innerHTML = starsNum === 0 ? "You passed the game!" : "You get " + finialStar + " .";
   } else {
       header.innerHTML = "Sorry!";
-      starsInfor.innerHTML = "You didn't pass the game!";
+      $starsInfor.text("You didn't pass the game!");
   }
 
   header.classList.add("bounce-in-down");
 
-  stepsInfor.innerHTML = Math.floor(steps/2);
-  showMin.innerHTML = parseInt(time/60);
-  showSec.innerHTML = time%60;
+  $stepsInfor.text(Math.floor(steps/2));
+  $showMin.text(parseInt(timer.time/60));
+  $showSec.text(timer.time%60);
 }
 
 function clock() {
+  let time = timer.time;
+
   if (clockFlag)
     clearTimeout(clockFlag);
 
@@ -464,10 +465,14 @@ function clock() {
         }
   }
 
-  minutes.innerHTML = formatting(parseInt(time/60));
-  seconds.innerHTML = formatting(time%60);
+  timer.minutes.text(formatting(parseInt(time/60)));
+  timer.seconds.text(formatting(time%60));
 
-  time++;
+  timer.time++;
+}
+//to format the output  eg: '0:0' => '00:09'
+function formatting(time) {
+  return (time>=0 && time<=9) ? "0" + time : time;
 }
 
 /*
