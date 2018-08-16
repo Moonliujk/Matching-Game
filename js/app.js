@@ -22,34 +22,31 @@ let cardsArray = new Array(),
     matchQueue = new Array(),
     steps = 0,
     lastEle,
-    clockFlag,
+    clockFlag,  // 计时器终止条件
     matchNum = 0,
     time = 0;
 
 
-var moves = document.getElementsByClassName("moves")[0];
+let $moves = $('.moves');
 
-// let $deck = $('.deck');
 // define timer which includes time relative params
-var timer = {
+let timer = {
   time: 0,
   minutes: $('.minutes'),
   seconds: $('.seconds'),
 }
 
-var winInfor = document.getElementsByClassName('win')[0];
-var renewInfor = document.getElementsByClassName('renew')[0];
-var stars = document.getElementsByClassName("stars")[0];
-var starsEle = stars.getElementsByTagName("span");
-// var minutes = document.getElementsByClassName('minutes')[0];
-// var seconds = document.getElementsByClassName('seconds')[0];
-var container = document.getElementsByClassName('container')[0];
-var countCircle = document.getElementsByClassName('count-circle')[0];
-var startInterface = document.getElementsByClassName("start-interface")[0];
-var countDown = document.getElementsByClassName('count-down')[0];
-var inputs = document.getElementsByTagName('input');
-var restTime = document.getElementById('rest-time');
-var modeChooseInfor = document.getElementsByClassName('mode-choose')[0];
+let $winInfor = $('.win');
+let $renewInfor = $('.renew');
+let $stars = $('.stars');
+let $starsEle = $('.stars span');
+let $container = $('.container');
+let $countCircle = $('.count-circle');
+let $startInterface = $(".start-interface");
+let $countDown = $('.count-down');
+let $inputs = $('input');
+let $restTime = $('#rest-time');
+let $modeChooseInfor = $('.mode-choose');
 
 //create 16 children nodes into the <ul class="deck">
 function createNodes() {
@@ -75,6 +72,7 @@ function Cards(i) {
   this.imageNum = i;
   this.source = `img/matchIcon/${source[i]}`;
 }
+
 //Create cards which save in cardsArray and each card has its own imageNum(there are two cards have same imageNum.)
 function createCards () {
   let num = 0;
@@ -85,7 +83,6 @@ function createCards () {
     }
     cardsArray[i] = new Cards(num-1);
   }
-
 }
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -147,40 +144,41 @@ function eventsRegister() {
 // The start interface's animation & events
 function chooseModeDlg() {
   //to judge whether choose the game level
-  for (let i=0;i<inputs.length;i++) {
-    if (inputs[i].checked) {
+  for (let i=0;i<$inputs.length;i++) {
+    if ($inputs.get(i).checked) {
       return startGame();
     }
   }
 
-  modeChooseInfor.style.display = "block";
-  modeChooseInfor.firstElementChild.classList.add('flipInX');
+  $modeChooseInfor.css("display", "block");
+  $('.mode-choose section').addClass('flipInX');
 
   return false;
 }
 
 function startGame() {
   //To configure the game level depending on the player' option.
-  for (let i=0;i<inputs.length;i++) {
-    if (inputs[i].checked) {
-      if(inputs[i].value === "hard") {
+  for (let i=0; i<$inputs.length; i++) {
+    if ($inputs.get(i).checked) {
+      if($inputs.get(i).value === "hard") {
         showCountDown();
       }
     }
   }
 
-  startInterface.style.display = "none";
-  container.style.display = "flex";
+  $startInterface.css("display", "none");
+  $container.css("display", "flex");
 
+  // 开始计时
   clock();
 }
 
 //to show the count-down timer
 function showCountDown() {
-  countDown.style.display = "block";
-  countDown.classList.add("bounce-in-left");
-  countCircle.classList.add('count-down-animation');
-  countCircle.classList.add('running');
+  $countDown.css("display", "block");
+  $countDown.addClass("bounce-in-left");
+  $countCircle.addClass('count-down-animation');
+  $countCircle.addClass('running');
 
   setTimeout("countDownFinish()", 30000);
 }
@@ -188,30 +186,30 @@ function showCountDown() {
 function countDownFinish() {
   if(timer.time === 30 && matchNum !== 8)  {
       clearTimeout(clockFlag);
-      winInfor.style.display = "block";
+      $winInfor.css ("display", "block");
       winAnimation("false");
   }
 }
 
 //The' backto' dialog show & hidden animation.
 function backToMain() {
-  modeChooseInfor.firstElementChild.classList.remove('flipInX');
-  modeChooseInfor.firstElementChild.classList.add('flipOutX');
-  modeChooseInfor.firstElementChild.addEventListener('animationend', delBacktoAnimation, false);
+  $('.mode-choose section').removeClass('flipInX');
+  $('.mode-choose section').addClass('flipOutX');
+  $('.mode-choose section')[0].addEventListener('animationend', delBacktoAnimation, false);
 }
 
 function delBacktoAnimation() {
-  modeChooseInfor.style.display = 'none';
+  $modeChooseInfor.css('display', 'none');
   this.classList.remove('flipOutX');
   this.removeEventListener('animationend', delBacktoAnimation, false);
 }
 
 function restartDlg() {
-  countCircle.classList.remove('running');
-  countCircle.classList.add('paused');
+  $countCircle.removeClass('running');
+  $countCircle.addClass('paused');
 
-  renewInfor.style.display = "block";
-  container.classList.add("bg-blur");
+  $renewInfor.css("display", "block");
+  $container.addClass("bg-blur");
 
   clearTimeout(clockFlag);
 }
@@ -219,65 +217,68 @@ function restartDlg() {
 function continueToPlay() {
   clock();
 
-  countCircle.classList.remove('paused');
-  countCircle.classList.add('running');
+  $countCircle.removeClass('paused');
+  $countCircle.addClass('running');
 
-  renewInfor.style.display = "none";
-  container.classList.remove("bg-blur");
+  $renewInfor.css("display", "none");
+  $container.removeClass("bg-blur");
 }
 
 function backtoStart() {
-  countCircle.classList.remove('count-down-animation', 'paused');
-  restTime.classList.remove('empersized');
+  $countCircle.removeClass('count-down-animation paused');
+  $restTime.removeClass('empersized');
 
-  renewInfor.style.display = "none";
-  winInfor.style.display = "none";
-  container.classList.remove("bg-blur");
+  $renewInfor.css("display", "none");
+  $winInfor.css("display", "none");
+  $container.removeClass("bg-blur");
 
-  container.style.display = 'none';
-  startInterface.style.display = 'block';
+  $container.css('display', 'none');
+  startInterface.css('display', 'block');
 
-  for (let i=0;i<inputs.length;i++) {
-    if (inputs[i].checked) {
-      inputs[i].checked = false;
+  for (let i=0;i<$inputs.length;i++) {
+    if ($inputs.get(i).checked) {
+      $inputs.get(i).checked = false;
     }
   }
 
+  // 初始化卡片
   initCards();
 }
 
-//to init relevant value, remove classname in elements and configure some elements background images.
+/**
+ * [初始化游戏参数：去除卡片的类名（open、match）]
+ */
 function initCards() {
   let $cardsEle = $('.flipper');
 
   clearTimeout(clockFlag);
 
+  // 移除卡片类名：match、open
+  $cardsEle.removeClass('match open');
+
+  // 计时器归零
   timer.minutes.text('00');
   timer.seconds.text('00');
-  moves.innerHTML = "0";
+  $moves.text("0");
   steps = 0;
   matchNum = 0;
   timer.time = 0;
 
+  // 匹配队列归零
   matchQueue = new Array();
-  countDown.style.display = "none";
-  countCircle.classList.remove('count-down-animation', 'running');
+  $countDown.css("display", "none");
+  $countCircle.removeClass('count-down-animation running');
 
   createCards();
   shuffle();
 
-  const NUM_STARTS = starsEle.length;
+  const NUM_STARTS = $starsEle.length;
   const NUM_CARDS = $cardsEle.length;
 
-  for (let i=0;i<NUM_STARTS;i++) {
-    starsEle[i].className = "fa fa-star";
-  }
-  //to configure each card's background-image
-  //for (let i=0; i<NUM_CARDS; i++) {
-    // cardsEle[i].className = "flipper";
-    //
-    //cardsEle[i].lastElementChild.style.backgroundImage = `url(${cardsArray[i].source})`;
-  //}
+  // 初始化星星
+  $starsEle.attr('class', 'fa fa-star')
+  //重新配置卡片的图片
+
   $.each($('.flipper .back'), function(index) {
     $(this).css('background-image', `url(${cardsArray[index].source})`);
   })
@@ -296,7 +297,7 @@ function cardsClickEvent() {
   ele.addClass("open", "show");
 
   steps++;
-  moves.innerHTML = Math.floor(steps/2);
+  $moves.text(Math.floor(steps/2));
   setStars(Math.floor(steps/2));
 
   if(steps%2 === 1){
@@ -331,16 +332,13 @@ function setStars(stepNum) {
   }
   switch (flag) {
     case (1):
-      if(starsEle[2].className !== styleTxt)
-        starsEle[2].className = styleTxt;
+      $('.stars span:nth-child(3)').attr('class', styleTxt);
       break;
     case (2):
-      if(starsEle[1].className !== styleTxt)
-        starsEle[1].className = styleTxt;
+      $('.stars span:nth-child(2)').attr('class', styleTxt);
       break;
     case (3):
-      if(starsEle[0].className !== styleTxt)
-        starsEle[0].className = styleTxt;
+      $('.stars span:nth-child(1)').attr('class', styleTxt);
       break;
   }
 }
@@ -363,7 +361,7 @@ function isMatch(array) {
       array.shift();
 
       if(++matchNum === 8) {
-        countCircle.classList.remove('count-down-animation', 'paused');
+        $countCircle.removeClass('count-down-animation paused');
         clearTimeout(clockFlag);
         winAnimation("true");
       }
@@ -393,10 +391,10 @@ function isMatch(array) {
   }
 }
 
-//to show the finish-game dislog, add some animation into it.
+// 显示通关信息
 function winAnimation(isWin) {
   let $finishStars = $('.fa-star-o'),
-      header = winInfor.getElementsByClassName('header')[0],
+      $header = $('.win .header'),
       $starsInfor = $('#starsInfor'),
       $stepsInfor = $('#stepsInfor'),
       $showMin = $('#minute'),
@@ -412,8 +410,8 @@ function winAnimation(isWin) {
     "delay-three"
   ];
 
-  winInfor.style.display = "block";
-  container.classList.add("bg-blur");
+  $winInfor.css("display", "block");
+  $container.addClass("bg-blur");
 
   for (let i=0;i<starsNum;i++) {
     finialStar += `<span class='fa fa-star fade-in ${delayTime[i]}'></span> ` ;
@@ -434,14 +432,14 @@ function winAnimation(isWin) {
           finialTxt = "Brilliance!";
           break;
       }
-      header.innerHTML = finialTxt;
+      $header.text(finialTxt);
       $starsInfor[0].innerHTML = starsNum === 0 ? "You passed the game!" : "You get " + finialStar + " .";
   } else {
-      header.innerHTML = "Sorry!";
+      $header.text("Sorry!");
       $starsInfor.text("You didn't pass the game!");
   }
 
-  header.classList.add("bounce-in-down");
+  $header.addClass("bounce-in-down");
 
   $stepsInfor.text(Math.floor(steps/2));
   $showMin.text(parseInt(timer.time/60));
@@ -454,25 +452,27 @@ function clock() {
   if (clockFlag)
     clearTimeout(clockFlag);
 
-  clockFlag = setTimeout("clock()", 1000);
+  clockFlag = setTimeout(() => {
+    clock()
+  }, 1000);
 
   if (time <= 30)  {
         if (time <= 26) {
-          restTime.innerHTML = 30 - time;
         } else {
-          restTime.classList.add('empersized');
-          restTime.innerHTML = 30 - time;
+          $restTime.addClass('empersized');
         }
+        $restTime.text(30 - time);
   }
 
-  timer.minutes.text(formatting(parseInt(time/60)));
-  timer.seconds.text(formatting(time%60));
+  timer.minutes.text( formatting( parseInt(time/60) ) );
+  timer.seconds.text( formatting( time%60 ) );
 
   timer.time++;
 }
+
 //to format the output  eg: '0:0' => '00:09'
 function formatting(time) {
-  return (time>=0 && time<=9) ? "0" + time : time;
+  return ( time>=0 && time<=9 ) ? "0" + time : time;
 }
 
 /*
