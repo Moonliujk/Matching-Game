@@ -30,4 +30,8 @@
   | **移动端（iPhone6/7 google模拟器）** |
   | ![PC端大屏幕展示](https://github.com/Moonliujk/imageBaseForArticle/raw/master/matching_game/pc.png) |
   | **PC端大屏幕展示** |
+  | ![游戏失败展示](https://github.com/Moonliujk/imageBaseForArticle/raw/master/matching_game/fail.png) |
+  | **游戏失败** |
+  | ![游戏成功展示](https://github.com/Moonliujk/imageBaseForArticle/raw/master/matching_game/success.png) |
+  | **游戏成功** |
 
