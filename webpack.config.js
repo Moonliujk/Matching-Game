@@ -1,27 +1,63 @@
-// “__dirname”是node.js中的一个全局变量，它指向当前执行脚本所在的目录
+// “__dirname”是 node.js 中的一个全局变量，它指向当前执行脚本所在的目录
 const path = require('path');
-const htmlWebpackPlugin = require('html-webpack-plugin')
+const htmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
-  entry: './app/src/js/app_tmp.js',
+  devtool: 'null',
+  entry: path.resolve(__dirname, 'app/js/index.js'),
   output: {
     path: path.resolve(__dirname, 'public'),
-    filename: 'js/index_tmp.js'
+    filename: 'js/[name]-bundle.js'
   },
   module: {
     rules: [
       {
         test: /\.js$/,
-        include: path.resolve(__dirname, "app/src/js"),
+        exclude: /node_modules/,
         use: 'babel-loader'
+      },
+      {
+        test: /\.(png|gif|jpg|jpeg|svg)$/i,
+        use: {
+          loader: 'file-loader',
+          query : {
+            name : '../img/[name].[ext]'
+          }
+        }
+      },
+      /*{
+        test: /\.css$/,
+        include: path.resolve(__dirname, "app/style"),
+        use: ExtractTextPlugin.extract({
+            fallback:"style-loader",
+            use:"css-loader"
+        })
+      },*/
+      {
+        test: /\.scss$/,
+        include: path.resolve(__dirname, "app/style"),
+        use: ExtractTextPlugin.extract({
+            fallback:"style-loader",
+            use:[{
+                loader:"css-loader"
+            },{
+                loader: "postcss-loader"
+            },{
+                loader:"sass-loader"
+            },]
+        })
       }
     ]
   },
   plugins: [
     new htmlWebpackPlugin({
       filename: 'index.html',
-      template: 'index.html',
+      template: "app/index.temp.html",
       inject: 'body'
+    }),
+    new ExtractTextPlugin({
+      filename: 'css/app.css'
     })
   ],
   devServer: {

@@ -233,7 +233,7 @@ function backtoStart() {
   $container.removeClass("bg-blur");
 
   $container.css('display', 'none');
-  startInterface.css('display', 'block');
+  $startInterface.css('display', 'block');
 
   for (let i=0;i<$inputs.length;i++) {
     if ($inputs.get(i).checked) {

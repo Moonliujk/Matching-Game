@@ -3,47 +3,41 @@
 <head>
     <meta charset="utf-8">
     <title>Matching Game</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,  user-scalable=no">
     <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
-    <link rel="stylesheet" href="css/app.css">
-    <!--PC端小屏幕样式-->
-    <link href="css/css-pc-small.css" rel="stylesheet" type="text/css" media="screen and (max-width: 640px)">
-    <!--手机端-->
-    <link href="css/css-mobile.css" rel="stylesheet" type="text/css" media="screen and (max-width: 640px) and (min-device-pixel-ratio: 1.5) ">
-    <!--PC端屏幕样式-->
-    <link href="css/css-pc.css" rel="stylesheet" type="text/css" media="screen and (min-width: 641px)">
-</head>
+    <link rel="stylesheet" href="app/css/app.css">
+<link href="css/app.css" rel="stylesheet"></head>
 <body>
     <!--win board after all elements matched-->
     <div class="win information">
-        <section>
+        <div class='information-wrapper'>
             <p class="header"></p>
             <p id="starsInfor"></p>
             <p>Move <span id="stepsInfor"></span> steps.</p>
             <p>You spend <span id="minute"></span> min <span id="second"></span> sec.</p>
 
             <a href="#" class="restart button">Play Again</a>
-        </section>
+        </div>
     </div>
 
     <!--replay information after all elements matched-->
     <div class="renew information">
-        <section>
-            <p>Do you want to restart the game?</p>
+        <div class='information-wrapper'>
+            <p class='header-info'>Do you want to restart the game?</p>
             <div class="btn-grounp">
               <a href="#" class="restart button">Yes</a>
               <a href="#" class="button continue">No</a>
             </div>
-        </section>
+        </div>
     </div>
 
     <!--if not choose the mode, this pop-up will show!-->
     <div class="mode-choose information">
-        <section>
-            <p>Please choose the game level at first!</p>
+        <div class='information-wrapper'>
+            <p class='header-info'>Please choose the game level at first!</p>
             <a href="#" class="backto button">Okay!</a>
-        </section>
+        </div>
     </div>
 
     <!--start interface-->
@@ -60,7 +54,7 @@
                     <label for="hard">Hard</label>
             </div>
 
-            <a href="#" id="start">Begin to travel</a>
+            <a href="/#" class="btn" id="start">Begin to travel</a>
         </section>
     </div>
 
@@ -71,28 +65,28 @@
                 <h1>Matching Game</h1>
             </header>
 
-            <p class="sperate-line"></p>
+            <div class="sperate-line"></div>
 
             <section class="score-panel">
 
               <!--show the number of stars that the player gets-->
-              <p class="stars">
+              <div class="stars">
                 Rating:
                 <span class="fa fa-star"></span>
                 <span class="fa fa-star"></span>
                 <span class="fa fa-star"></span>
-              </p>
+              </div>
 
-              <p>
+              <div>
                 Moves:
-                <span class="moves">3</span>
-              </p>
+                <span class="moves">0</span>
+              </div>
 
-              <p class="time">
+              <div class="time">
                 Time:
                 <span class="minutes">00</span>:
                 <span class="seconds">00</span>
-              </p>
+              </div>
 
               <div class="restart-icon">
             		<i class="fa fa-repeat"></i>
@@ -108,18 +102,17 @@
         </div>
 
         <!--card arrays-->
-        <ul class="deck">
-
+        <div class="deck">
             <!--the basic structure of cards-->
-            <!--<li class="flipper-container card">
+            <!--<div class="flipper-container card">
                 <div class="flipper">
-                    <i class="front"></i>
-                    <i class="back"></i>
+                    <div class="front"></i>
+                    <div class="back"></i>
                 </div>
-            </li>-->
-        </ul>
+            </div>-->
+        </div>
     </div>
 
-    <script src="js/app.js"></script>
-<script type="text/javascript" src="js/index_tmp.js"></script></body>
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="js/main-bundle.js"></script></body>
 </html>

@@ -276,8 +276,12 @@ body {
  */
 
 .deck {
-    width: 580px;
-    height: 590px;
+    /*width: 580px;
+    height: 590px;*/
+    width: 10vw;
+    min-width: 360px;
+    height: calc(10vw + 10px);
+    min-height: 360px;
     padding: 23px;
     border-radius: 1.2rem;
     border: 5px solid #0f88eb;

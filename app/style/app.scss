@@ -1,0 +1,851 @@
+$mainColor: #0f88eb;
+$shadowColor: rgba(150, 150, 150, 0.5);
+
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+html,
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: white url("../img/kanshan_little.png") no-repeat 0% 100%/300px;
+    font-family: 'Coda', 'Comic Sans', cursive;
+    color: $mainColor;
+}
+
+/*information board style*/
+@media screen and (max-width: 768px) {
+  .information-wrapper {
+    padding: 15px 25px;
+    width: 75%;
+
+    p {
+      font-size: 25px;
+      margin: 5px;
+    }
+    .button {
+      font-size: 15px;
+      padding: 8px 12px;
+    }
+    .btn-grounp {
+      .button {
+        width: 3rem;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .information-wrapper {
+    padding: 20px 60px;
+
+    p.header {
+      font-size: 50px;
+    }
+    p {
+      font-size: 25px;
+      margin: 10px;
+    }
+    .button {
+      font-size: 20px;
+      padding: 10px 12px;
+    }
+    .btn-grounp {
+      .button {
+        width: 6rem;
+      }
+    }
+  }
+}
+
+.information {
+  position: fixed;
+  z-index: 2;
+  top: 0; left: 0; bottom: 0; right: 0;
+
+  .information-wrapper {
+    box-sizing: content-box;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -70%);
+    border-radius: 0.8rem;
+    text-align: center;
+    background-color: white;
+    color: black;
+
+    p.header {
+      font-weight: 900;
+      margin-bottom: 5px;
+    }
+    p {
+      font-size: 25px;
+    }
+    .header-info {
+      font-size: 25px;
+      margin-bottom: 10px;
+    }
+    .button {
+      display: block;
+      text-decoration: none;
+      margin: auto;
+      border-radius: 0.5rem;
+      font-weight: bold;
+      color: #0f88eb;
+      border: 2px solid #0f88eb;
+      transition: color 0.2s,
+                  background-color 0.2s;
+    }
+    .button:hover {
+      background-color: #0f88eb;
+      color: white;
+      transition: all 0.2s;
+    }
+    .btn-grounp {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+
+      .button {
+        width: 6rem;
+      }
+    }
+  }
+}
+
+.win,
+.renew,
+.mode-choose {
+  display: none;
+}
+/*win information board style*/
+.win {
+  .fade-in {
+    animation-name: fade-in;
+    animation-duration: 0.6s;
+    animation-fill-mode: forwards;
+  }
+  .delay {
+    animation-delay: 0;
+  }
+  .delay-two {
+    animation-delay: 0.3s;
+  }
+  .delay-three {
+    animation-delay: 0.6s;
+  }
+}
+
+.bounce-in-down {
+  animation: bounceInDown 1s forwards;
+}
+
+/*mode choose information board*/
+.mode-choose {
+  .information-wrapper {
+    box-shadow: 3px 3px 25px $shadowColor;
+    border-radius: 0.5rem;
+  }
+  .information-wrapper.flipInX {
+    backface-visibility: visible;
+    animation: flipInX 0.5s forwards;
+  }
+  .information-wrapper.flipOutX {
+    animation: flipOutX 0.5s forwards;
+    backface-visibility: visible;
+  }
+}
+
+#stepsInfor,
+#minute,
+#second {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+
+/*start interface style*/
+.start-interface {
+  display: block;        /*hidden the start interface through changing 'display = none' to 'display = flex' */
+  position: absolute;
+  top: 45%; left: 50%;
+  transform: translate(-50%, -50%);
+
+  header {
+    margin: auto;
+
+    h1 {
+      text-align: center;
+      font-size: 50px;
+      font-weight: bold;
+      color: black;
+    }
+  }
+  section {
+    width: 30rem;
+
+    .flex-row {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .mode {
+      label {
+        font-size: 20px;
+        font-weight: bold;
+        width: 80px;
+        height: 80px;
+        line-height: 75px;
+        border-radius: 50%;
+        border: 3px transparent solid;
+        transition: all 0.4s;
+        text-align: center;
+        cursor: pointer;
+
+        &:hover {
+          transform: scale(1.5);
+          box-shadow: 10px 10px 20px $shadowColor;
+        }
+
+        &:nth-child(2) {
+          color: $mainColor;
+        }
+
+        &:nth-child(4) {
+          color: red;
+        }
+      }
+      input {
+        position: absolute;
+        clip: rect(0, 0, 0, 0);
+
+        &:checked label {
+          transform: scale(1.5);
+          box-shadow: 10px 10px 20px $shadowColor;
+        }
+
+        & + label:nth-child(2):hover,
+        &:checked + label:nth-child(2) {
+          border-color: $mainColor;
+        }
+
+        &:checked + label {
+          transform: scale(1.5);
+        }
+
+        & + label:nth-child(4):hover,
+        &:checked + label:nth-child(4) {
+          border-color: red;
+        }
+      }
+    }
+
+    .btn {
+      display: block;
+      box-sizing: border-box;
+      margin-top: 5rem;
+      text-decoration: none;
+      text-align: center;
+      font-weight: bold;
+    }
+  }
+  .flex-cloumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+#start {
+  font-size: 25px;
+  width: 15rem;
+  line-height: 1.5rem;
+  padding: 0.8rem 1.2rem;
+  margin: auto;
+  margin-top: 3rem;
+  color: $mainColor;
+  border: 3px solid $mainColor;
+  border-radius: 0.6rem;
+  background-color: white;
+
+  &:hover {
+    transition: all 0.2s;
+    color: white;
+    background-color: $mainColor;
+  }
+}
+
+/*main content style*/
+.container {
+    display: none;      /*-----show the game interface through changing 'display = none' to 'display = flex'-----*/
+    justify-content: center;
+    align-items: center;
+    transition: filter 0.2s;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.bg-blur {
+    filter: blur(10px);
+}
+
+/*
+ * Styles for the deck of cards
+ */
+@media screen and (max-width: 768px) {
+  .deck {
+    width: 360px;
+    height: 370px;
+    padding: 12px;
+
+    .card {
+      width: 78px;
+      height: 78px;
+    }
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .deck {
+    width: 580px;
+    height: 590px;
+    padding: 23px;
+
+    .card {
+      height: 125px;
+      width: 125px;
+    }
+  }
+
+}
+
+.deck {
+    border-radius: 1.2rem;
+    border: 5px solid $mainColor;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+
+    .card {
+        border-radius: 8px;
+        cursor: pointer;
+        perspective: 1000px;
+    }
+    .flipper {
+        width: 100%;
+        height: 100%;
+        transition: transform 0.3s;
+        transform: translateY(0deg);
+        transform-style: preserve-3d;
+        cursor: pointer;
+        position: relative;
+
+        .front,
+        .back {
+          backface-visibility: hidden;
+          position: absolute;
+          border-radius: 8px;
+          top: 0; left: 0; bottom: 0; right: 0;
+        }
+        .front {
+          z-index: 2;
+          background: $mainColor url(../img/Udacity_logo.png) center/60px 60px no-repeat;
+          transform: rotateY(0deg);
+        }
+        .back {
+          transform: rotateY(180deg);
+          background-size: 100%;
+          background-repeat: no-repeat;
+        }
+        /*动画样式*/
+        &.open {
+          transform: rotateY(180deg);
+        }
+        &.match {
+            cursor: default;
+            animation: pulse 0.5s forwards;
+            font-size: 33px;
+        }
+        &.error {
+            cursor: default;
+            animation: jello 0.5s,
+                       close 0.5s 0.45s forwards;
+            transform-origin: center;
+        }
+    }
+}
+
+/*
+ * Styles for the counter
+ */
+@media screen and (max-width: 768px) {
+  .count-down {
+    bottom: 1rem; left: -5rem;
+    height: 150px;
+    width: 250px;
+
+    .count-circle {
+      width: 150px;
+      height: 150px;
+    }
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .count-down {
+    top: 2.5rem; left: -5rem;
+    height: 180px;
+    width: 320px;
+
+    .count-circle {
+      width: 180px;
+      height: 180px;
+    }
+  }
+}
+
+ .count-down {
+   display: none;
+   position: absolute;
+   border-radius: 0 90px 90px 0;
+   box-shadow: 5px 5px 18px -5px $shadowColor;
+   background-color: white;
+
+   &.bounce-in-left {
+     animation: bounceInLeft 1s forwards;
+   }
+   .count-circle {
+     position: absolute;
+     top: 0; right: 0;
+     transform: scale(0.8);
+     border-radius: 50%;
+     background-color: $mainColor;
+     color: black;
+     background-image: linear-gradient(to right, $mainColor 50%, white 0);
+
+     &::before {
+       content: '';
+       display: block;
+       height: 100%;
+       margin-left: 50%;
+       background-color: inherit;
+       border-radius: 0 100% 100% 0/50%;
+       transform-origin: left;
+     }
+     /*倒计时动画*/
+     &.count-down-animation::before {
+       animation: maskSpin 15s linear 2,
+                  bgColorChange 30s step-end 1;
+     }
+     &.paused::before {
+       animation-play-state: paused;
+     }
+     &.running::before {
+       animation-play-state: running;
+     }
+     p {
+       font-size: 40px;
+       font-weight: bold;
+       margin: 0;
+       position: absolute;
+       top: 50%; left: 50%;
+       transform: translate(-50%, -50%);
+       width: 90%;
+       height: 90%;
+       background-color: white;
+       border-radius: 50%;
+
+       #rest-time {
+         position: absolute;
+         top: 50%; left: 45%;
+         transform: translate(-50%, -50%) scale(1);
+         transition: all 1s;
+
+         &.empersized {
+           color: red;
+           animation: jackInTheBox 1s 4 forwards;
+         }
+         &::after {
+           content: 's';
+           color: inherit;
+           position: absolute;
+           right: -20px;
+           bottom: 0;
+         }
+       }
+     }
+   }
+
+ }
+
+@media screen and (max-width: 768px) {
+    .information-box {
+      top: 0; left: 50%;
+      width: 100vw;
+      transform: translateX(-50%);
+
+      h1 {
+        font-size: 35px;
+        margin: 40px 0 20px;
+      }
+      .sperate-line {
+        display: none;
+      }
+      .score-panel {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        font-size: 20px;
+
+        & > div {
+          margin-right: 5px;
+          width: 45%;
+          text-align: center;
+        }
+        & > div:last-child {
+          margin-right: 0;
+        }
+        .restart-icon {
+          font-size: 30px;
+        }
+      }
+    }
+}
+
+@media screen and (min-width: 769px) {
+    .information-box {
+      top: 0; right: 6rem;
+      width: 10rem;
+      height: 100vh;
+
+      h1 {
+        margin: 0;
+        font-size: 50px;
+      }
+      .sperate-line {
+        display: block;
+      }
+      .score-panel {
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+        width: 10rem;
+        height: 11rem;
+        font-size: 20px;
+
+        .restart-icon {
+          font-size: 40px;
+        }
+      }
+    }
+}
+
+/*
+ * Styles for the Score Panel
+ */
+ .information-box {
+   position: absolute;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   font-size: 35px;
+   color: black;
+
+   h1 {
+     font-weight: bold;
+     text-align: center;
+   }
+   .sperate-line {
+     margin: 0 0 5rem 0;
+     width: 5rem;
+     height: 5rem;
+     border-bottom: 1px solid inherit;
+     background-image: url(../img/keepWatch.gif);
+     background-repeat: no-repeat;
+     background-size: 60px;
+     background-position: 10px 25px;
+   }
+   .score-panel {
+     display: flex;
+     color: black;
+
+     div {
+       margin: 0;
+       font-weight: bold;
+     }
+     span {
+       font-weight: normal;
+     }
+     .stars {
+         margin: 0;
+         padding: 0;
+         display: inline-block;
+
+         span {
+           color: $mainColor;
+         }
+     }
+     .moves {
+       display: inline-block;
+       text-align: center;
+       width: 1.5rem;
+     }
+     .restart-icon {
+         align-self: center;
+         float: right;
+         cursor: pointer;
+         transform: rotate(0) scale(1);
+         transition: transform 0.3s;
+
+         &:hover {
+             transform: rotate(360deg) scale(1.3);
+             transition: transform 0.3s;
+         }
+     }
+   }
+ }
+
+
+/*
+ * animation effect
+*/
+
+
+/*-----wrong matched effect-----*/
+@keyframes maskSpin {
+  to {  transform: rotate(0.5turn); }
+}
+
+@keyframes bgColorChange {
+  50% { background-color: white; }
+}
+
+@keyframes close {
+  to { transform: rotateY(0deg); }
+}
+
+@keyframes fade-in {
+  from {
+    transform: scale(0);
+  }
+
+  25% {
+    transform: scale(0.4);
+  }
+
+  45% {
+    transform: scale(0.8);
+  }
+
+  55% {
+    transform: scale(1);
+  }
+
+  65% {
+    transform: scale(1.3);
+  }
+
+  75% {
+    transform: scale(1.5);
+  }
+
+  82% {
+    transform: scale(1.23);
+  }
+
+  91% {
+    transform: scale(1.1);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+/*-----wrong matched effect-----*/
+@keyframes jello {
+  from, 11.1%, to {
+    transform: rotateY(180deg) skewX(0deg) skewY(0deg);
+  }
+
+  22.2% {
+    transform: rotateY(180deg) skewX(-15.5deg) skewY(-15.5deg);
+  }
+
+  33.3% {
+    transform: rotateY(180deg) skewX(10.25deg) skewY(10.25deg);
+  }
+
+  44.4% {
+    transform: rotateY(180deg) skewX(-3.125deg) skewY(-3.125deg);
+  }
+
+  55.5% {
+    transform: rotateY(180deg) skewX(4.5625deg) skewY(4.5625deg);
+  }
+
+  66.6% {
+    transform: rotateY(180deg) skewX(-1.78125deg) skewY(-1.78125deg);
+  }
+
+  77.7% {
+    transform: rotateY(180deg) skewX(0.590625deg) skewY(0.590625deg);
+  }
+
+  88.8% {
+    transform: rotateY(180deg) skewX(-0.2053125deg) skewY(-0.2053125deg);
+  }
+}
+/*-----right matched effect-----*/
+@keyframes pulse {
+  from {
+    transform: rotateY(180deg) scale(1);
+  }
+
+  50% {
+    transform: rotateY(180deg) scale(1.1);
+  }
+
+  to {
+    transform: rotateY(180deg) scale(1);
+  }
+}
+/*finial text animation*/
+@keyframes bounceInDown {
+  from, 60%, 75%, 90%, to {
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+
+  0% {
+    opacity: 0;
+    transform: translate(0, -3000px);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate(0, 25px);
+  }
+
+  75% {
+    transform: translate(0, -10px);
+  }
+
+  90% {
+    transform: translate(0, 5px);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+@keyframes bounceInLeft {
+  from, 60%, 75%, 90%, to {
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+
+  0% {
+    opacity: 0;
+    transform: translate(-3000px, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate(25px, 0);
+  }
+
+  75% {
+    transform: translate(-10px, 0);
+  }
+
+  90% {
+    transform: translate(5px, 0);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+@keyframes jackInTheBox {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.1) rotate(30deg);
+    transform-origin: center bottom;
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.2) rotate(-10deg);
+  }
+
+  70% {
+    transform: translate(-50%, -50%) scale(2) rotate(3deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.6);
+  }
+}
+
+
+/*choose mode dialog animation*/
+@keyframes flipInX {
+  from {
+    transform: translate(-50%, -70%) perspective(400px) rotate3d(1, 0, 0, -90deg);
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
+
+  40% {
+    transform: translate(-50%, -70%) perspective(400px) rotate3d(1, 0, 0, -20deg);
+    animation-timing-function: ease-in;
+  }
+
+  60% {
+    transform: translate(-50%, -70%) perspective(400px) rotate3d(1, 0, 0, 10deg);
+    opacity: 1;
+  }
+
+  80% {
+    transform: translate(-50%, -70%) perspective(400px) rotate3d(1, 0, 0, -5deg);
+  }
+
+  to {
+    transform: translate(-50%, -70%) perspective(400px) rotate3d(1, 0, 0, 0deg);
+  }
+}
+
+@keyframes flipOutX {
+  from {
+    transform: translate(-50%, -70%) perspective(400px)  rotate3d(1, 0, 0, 0deg);
+  }
+
+  30% {
+    transform: translate(-50%, -70%) perspective(400px) rotate3d(1, 0, 0, -20deg);
+    opacity: 1;
+  }
+
+  to {
+    transform: translate(-50%, -70%) perspective(400px) rotate3d(1, 0, 0, 90deg);
+    opacity: 0;
+  }
+}

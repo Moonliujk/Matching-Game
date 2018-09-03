@@ -2,20 +2,17 @@
 
 ## Table of Contents
 
-* [Instructions](#instructions)
-* [Contributing](#contributing)
-* Please click here to play [Matching Game](https://moonliujk.github.io/Matching-Game/)
+* <a href='#Instructions'>项目说明</a>
+* <a href='#tech-point'>技术点</a>
+* 点击这里，开始体验 [Matching Game](https://moonliujk.github.io/Matching-Game/)
 
-## Instructions
+## <a id="Instructions">项目说明</a>
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
 
-To get started, open `js/app.js` and start building out the app's functionality
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+## <a id="tech-point">技术点</a>
 
-## Contributing
-
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+ - 使用 `webpack` 实现项目模块化打包构建
+ - 采用**响应式布局**，使项目可以在移动端以及PC端良好显示
+ - 使用 `Bootstrap` 实现响应式布局
+ - `CSS` 部分采用 `SCSS` 预处理器实现；对于项目中 `DOM` 的操作采用 `jQuery` 库
