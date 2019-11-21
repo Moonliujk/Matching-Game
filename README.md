@@ -4,7 +4,7 @@
 
 * <a href='#Instructions'>项目说明</a>
 * <a href='#tech-point'>技术点</a>
-* <a href='#game-picture'>游戏截图</a>
+### [游戏截图](#游戏截图)
 * 点击这里，开始体验 [Matching Game](https://htmlpreview.github.io/?https://github.com/Moonliujk/Matching-Game/blob/master/index.html)
 
 ## <a id="Instructions">项目说明</a>
@@ -23,7 +23,7 @@
  - 对于项目中 `DOM` 的操作采用 `jQuery` 库
 
 
-## <a href='#game-picture'>游戏截图</a>
+## 游戏截图
   | 项目截图 |
   | :---: |
   | ![移动端模拟](https://github.com/Moonliujk/imageBaseForArticle/raw/master/matching_game/phone.png) |
