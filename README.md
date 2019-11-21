@@ -4,7 +4,7 @@
 
 * <a href='#Instructions'>项目说明</a>
 * <a href='#tech-point'>技术点</a>
-### [游戏截图](#游戏截图)
+[游戏截图](#游戏截图)
 * 点击这里，开始体验 [Matching Game](https://htmlpreview.github.io/?https://github.com/Moonliujk/Matching-Game/blob/master/index.html)
 
 ## <a id="Instructions">项目说明</a>
